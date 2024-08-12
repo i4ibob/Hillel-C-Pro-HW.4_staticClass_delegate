@@ -37,7 +37,7 @@ partial class Program
                     int y = 7; int x = 7;
                     Console.WriteLine("какую функцию желаете использовать?\n" +
                         "1: Factorial()\n" +
-                        "2: GMD\n" +
+                        "2: GCD\n" +
                         "3: LCM\n");
                     Console.Write("Введите номер задачи:");
                    var consumerQuery1 = (ProgramFunc1)Convert.ToInt32(Console.ReadLine());
@@ -56,7 +56,7 @@ partial class Program
                             y = Convert.ToInt32(Console.ReadLine() ?? "7");
                             Console.Write("Введите второе число :");
                             x = Convert.ToInt32(Console.ReadLine() ?? "7");
-                            MathHelper.GCD(y, x);
+                            Console.WriteLine("Результат GCD: "+MathHelper.GCD(y, x)); 
                             break;
                         case ProgramFunc1.LCM:
                             Console.Clear();
@@ -64,7 +64,7 @@ partial class Program
                             y = Convert.ToInt32(Console.ReadLine() ?? "7");
                             Console.Write("Введите второе число :");
                             x = Convert.ToInt32(Console.ReadLine() ?? "7");
-                            MathHelper.LCM(y, x);
+                            Console.WriteLine("Результат GCD: " + MathHelper.LCM(y, x));
                             break;
 
                     }

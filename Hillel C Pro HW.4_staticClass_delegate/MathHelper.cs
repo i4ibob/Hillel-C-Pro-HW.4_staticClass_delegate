@@ -30,14 +30,14 @@ partial class Program
             }
             int result;
             result = a;
-            Console.WriteLine("Результат:  " + result);
+            
             return result;
         }
         //LCM(int a, int b): знаходить найменше спільне кратне (НСК) двох чисел.
         public  static int LCM(int a, int b) 
         {
             int result = Math.Abs(a * b) / GCD(a, b);
-            Console.WriteLine("Результат:  " + result);
+            
             return result;
 
 
