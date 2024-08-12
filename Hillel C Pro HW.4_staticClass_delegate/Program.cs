@@ -1,73 +1,125 @@
-﻿//Завдання 1: Статичний клас для математичних обчислень
-//Створіть статичний клас MathHelper, який містить такі методи:
-static class MathHelper
+﻿
+using System.Threading.Channels;
+
+partial class Program
 {
 
 
-
-    //Factorial(int n): обчислює факторіал числа.
-    static void Factorial(int n) { }
-    //GCD(int a, int b): знаходить найбільший спільний дільник (НСД) двох чисел.
-    static void GCD(int a, int b) { }
-    //LCM(int a, int b): знаходить найменше спільне кратне (НСК) двох чисел.
-    static void LCM(int a, int b) { }
-    
-}
+    //Завдання 4: Делегати та події
+    public delegate void Stoptimer();
 
 
 
 
-//Завдання 2: Вкладені класи для керування налаштуваннями
-//Реалізуйте клас ApplicationSettings, який містить вкладений клас DatabaseSettings.
-class ApplicationSettings
-{//ApplicationSettings має містити поля для зберігання основних налаштувань програми (наприклад, назва програми, версія).
-    string? nameOfProgram;
-    double versionProgram;
-    class DatabaseSettings
-    {//DatabaseSettings має містити поля для налаштувань бази даних (наприклад, рядок підключення, таймаут підключення).
-        string? databaseName;
-        string? databaceConnectionString;
-        string? databasePassword;
-        int databasePort;
-        int timeOutConnection;
+    //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++//
+    static void Main(string[] args)
+  { 
+      ApplicationSettings settings = new ApplicationSettings();
+
+
+
+
+        while (true)
+        {
+            Console.WriteLine($"Задание 1: Static classes , MathHelper\n" +
+                $"Задание 2: Вложенные Классы\n" +
+                $"Задание 3: Generics\n" +
+                $"Задание 4: Delegate");
+            Console.Write("Введите номер задачи:");
+            var consumerQuery = (ProgramFunc)Convert.ToInt32(Console.ReadLine());
+            switch (consumerQuery)
+            {
+                case ProgramFunc.MathHelper:
+                    // 1 
+
+                    Console.WriteLine("Задание 1.\n");
+
+                    int y = 7; int x = 7;
+                    Console.WriteLine("какую функцию желаете использовать?\n" +
+                        "1: Factorial()\n" +
+                        "2: GMD\n" +
+                        "3: LCM\n");
+                    Console.Write("Введите номер задачи:");
+                   var consumerQuery1 = (ProgramFunc1)Convert.ToInt32(Console.ReadLine());
+                    switch (consumerQuery1) 
+                    { 
+                        case ProgramFunc1.Factorial:
+                            Console.Clear();
+                            Console.Write("Введите число факториала:");
+                            y = Convert.ToInt32(Console.ReadLine() ?? "7");
+
+                            Console.WriteLine($"результат факториала числа {y} = " + MathHelper.Factorial(y));
+                        break;
+                        case ProgramFunc1.GCD:
+                            Console.Clear();
+                            Console.Write("Введите первое число :");
+                            y = Convert.ToInt32(Console.ReadLine() ?? "7");
+                            Console.Write("Введите второе число :");
+                            x = Convert.ToInt32(Console.ReadLine() ?? "7");
+                            MathHelper.GCD(y, x);
+                            break;
+                        case ProgramFunc1.LCM:
+                            Console.Clear();
+                            Console.Write("Введите первое число :");
+                            y = Convert.ToInt32(Console.ReadLine() ?? "7");
+                            Console.Write("Введите второе число :");
+                            x = Convert.ToInt32(Console.ReadLine() ?? "7");
+                            MathHelper.LCM(y, x);
+                            break;
+
+                    }
+                
+                 break;
+
+                // 2
+
+                case ProgramFunc.ApplicationSettings:
+                    Console.Clear();
+                    Console.WriteLine("Задание 2.\n");
+                    settings.programSettings();
+                 
+                    break;
+           
+
+
+                //done
+                //3
+                case ProgramFunc.Generic:
+                    Console.Clear();
+                    //int
+                    Storage<int> intStorage = new Storage<int>();
+                    Console.Write("Создан объект типа int , введите его значение :");
+                    var queryInt = Convert.ToInt32(Console.ReadLine());
+                    intStorage.SetItem(queryInt);
+                    Console.WriteLine($"INT = " + intStorage.GetItem());
+                    // string
+                    Storage<string> stringStorage = new Storage<string>();
+                    Console.Write($"Создан объект типа string , введите его значение :");
+                    var queryString = Console.ReadLine() ?? "Empty string";
+                    stringStorage.SetItem(queryString);
+                    Console.WriteLine($"string = " + stringStorage.GetItem());
+                    // double 
+
+                    break;
+
+                //4
+                case ProgramFunc.Delegate:
+                    Console.Clear();
+                    Timer timer = new Timer();
+                    Console.Write("Задайте время таймера : ");
+                    timer.OnTimeElapsed += () => { Console.WriteLine("Таймер остановлен!"); };
+                    var queryTimer = Convert.ToInt32(Console.ReadLine());
+                    Console.WriteLine("вызван таймер на " + queryTimer +" секунд \nОжидайте..");
+                    timer.Start(queryTimer);
+                    //возможно асинхронность решит проблему точек
+                    //for (int i = 0; i < queryTimer; i++)
+                    //{ 
+                    //Thread.Sleep(1000);
+                    //    Console.Write(".");
+                    //}
+                    break;
+            }
+        }
+
     }
-
-    //Створіть метод, що повертає повну інформацію про налаштування програми у вигляді рядка.
-   public string programSettings ()
-   {
-
-        string info = "";
-        return info;
-   }
 }
-
-
-
-
-
-
-
-//Завдання 3: Дженеріковий клас "Сховище"
-//Створіть дженеріковий клас Storage<T>, який дозволяє зберігати один елемент типу T.
-class Storage<T> 
-{ 
-    //Додайте методи SetItem(T item) для встановлення значення і GetItem() для отримання значення.
-    void SetItem(T item) { }
-    void GetItem() { }
-    //Перевірте роботу класу з різними типами даних (наприклад, з int, string, користувацькими класами).
-}
-
-
-//Завдання 4: Делегати та події
-//Створіть клас Timer, який буде працювати як простий таймер.
-class Timer 
-{
-   
-    void Start(int seconds) 
-    {
-
-    }
-}
-//Клас повинен мати метод Start(int seconds), який буде викликати подію OnTimeElapsed після закінчення вказаного часу.
-//Подія OnTimeElapsed повинна бути типу Action і спрацьовувати, коли таймер закінчить відлік.
-//Створіть програму, яка використовує цей таймер, і підпишіться на подію, щоб виводити повідомлення на екран після завершення таймера.
